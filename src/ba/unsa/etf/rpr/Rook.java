@@ -23,7 +23,7 @@ public class Rook extends ChessPiece {
                 }
             }
         if(!hasMove)
-            throw new IllegalChessMoveException("Illegal move for Queen");
+            throw new IllegalChessMoveException("Illegal move for Rook");
         pozicija=position;
     }
 }

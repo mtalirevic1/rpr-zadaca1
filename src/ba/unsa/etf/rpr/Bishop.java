@@ -23,7 +23,7 @@ public class Bishop extends ChessPiece {
                 }
             }
         if(!hasMove)
-            throw new IllegalChessMoveException("Illegal move for Queen");
+            throw new IllegalChessMoveException("Illegal move for Bishop");
         pozicija=position;
     }
 }
