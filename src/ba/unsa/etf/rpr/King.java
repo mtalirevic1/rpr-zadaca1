@@ -13,8 +13,16 @@ public class King  extends ChessPiece{
         String nova=position.toLowerCase();
         if(!isPositionLegal(position))
             throw new IllegalArgumentException("Illegal position");
-        if( !( nova.charAt(0)==stara.charAt(0) && nova.charAt(1)==stara.charAt(1)+1 ) || !( nova.charAt(0)==stara.charAt(0) && nova.charAt(1)==stara.charAt(1)-1 ) ||
-                !( nova.charAt(0)==stara.charAt(0)-1 && nova.charAt(1)==stara.charAt(1) ) || !( nova.charAt(0)==stara.charAt(0)+1 && nova.charAt(1)==stara.charAt(1) ) )
+       boolean hasMove=false;
+       for(int i=-1;i<=1;i++)
+           for(int j=-1;j<=1;j++) {
+               if(i==0 && j==0) continue;
+               if( nova.charAt(0)==stara.charAt(0)+i && nova.charAt(1)==stara.charAt(1)+j ){
+                   hasMove=true;
+                   break;
+               }
+           }
+        if(!hasMove)
             throw new IllegalChessMoveException("Illegal move for King");
         pozicija=position;
     }
