@@ -8,6 +8,7 @@ public class Rook extends ChessPiece {
         super(pozicija, boja);
     }
 
+    @Override
     public void move(String position) throws IllegalChessMoveException {
         String stara = pozicija.toLowerCase();
         String nova = position.toLowerCase();
