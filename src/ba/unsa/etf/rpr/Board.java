@@ -75,10 +75,10 @@ public class Board {
         figura.setPosition(lastPosition);
 
         String pozicija=position.toUpperCase();
-        int nova0=pozicija.charAt(0)-17-'0'-1;
-        int nova1=pozicija.charAt(1)-'0'-1;
-        int stara0=posljednja.charAt(0)-17-'0'-1;
-        int stara1=posljednja.charAt(1)-'0'-1;
+        int nova0=pozicija.charAt(0)-17-'0';
+        int nova1=pozicija.charAt(1)-'0';
+        int stara0=posljednja.charAt(0)-17-'0';
+        int stara1=posljednja.charAt(1)-'0';
 
         if(sahovnica[nova1][nova0]!=null && sahovnica[nova1][nova0].getColor()==color)
             throw new IllegalChessMoveException("Illegal move");
