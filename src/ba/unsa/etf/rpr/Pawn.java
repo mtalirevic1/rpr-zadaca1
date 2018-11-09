@@ -1,8 +1,6 @@
 package ba.unsa.etf.rpr;
 
 public class Pawn extends ChessPiece {
-    private String pozicija;
-    private Color boja;
     private boolean firstMove = true;
 
     Pawn(String pozicija, Color boja) {
@@ -11,10 +9,9 @@ public class Pawn extends ChessPiece {
 
     @Override
     public void move(String position) throws IllegalChessMoveException {
-        String stara = pozicija.toLowerCase();
+        String stara = super.getPosition().toLowerCase();
         String nova = position.toLowerCase();
-        if (!isPositionLegal(position))
-            throw new IllegalArgumentException("Illegal position");
+        super.move(position);
         boolean hasMove = false;
         for (int i = -1; i <= 1; i++)
             if (nova.charAt(0) == stara.charAt(0) + i && nova.charAt(1) == stara.charAt(1) + 1)
@@ -26,7 +23,7 @@ public class Pawn extends ChessPiece {
         }
         if (!hasMove)
             throw new IllegalChessMoveException("Illegal move for Pawn");
-        pozicija = position;
+       super.setPosition(position);
         if (firstMove) firstMove = false;
     }
 }

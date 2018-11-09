@@ -1,19 +1,15 @@
 package ba.unsa.etf.rpr;
 
 public class Bishop extends ChessPiece {
-    private String pozicija;
-    private Color boja;
-
     Bishop(String pozicija, Color boja) {
         super(pozicija, boja);
     }
 
     @Override
     public void move(String position) throws IllegalChessMoveException {
-        String stara = pozicija.toLowerCase();
+        String stara = super.getPosition().toLowerCase();
         String nova = position.toLowerCase();
-        if (!isPositionLegal(position))
-            throw new IllegalArgumentException("Illegal position");
+        super.move(position);
         boolean hasMove = false;
         for (int i = -8; i <= 8; i++)
             for (int j = -8; j <= 8; j++) {
@@ -25,6 +21,6 @@ public class Bishop extends ChessPiece {
             }
         if (!hasMove)
             throw new IllegalChessMoveException("Illegal move for Bishop");
-        pozicija = position;
+        super.setPosition(position);
     }
 }

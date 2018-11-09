@@ -1,8 +1,6 @@
 package ba.unsa.etf.rpr;
 
 public class Knight extends ChessPiece {
-    private String pozicija;
-    private Color boja;
 
     Knight(String pozicija, Color boja) {
         super(pozicija, boja);
@@ -10,10 +8,9 @@ public class Knight extends ChessPiece {
 
     @Override
     public void move(String position) throws IllegalChessMoveException {
-        String stara = pozicija.toLowerCase();
+        String stara = super.getPosition().toLowerCase();
         String nova = position.toLowerCase();
-        if (!isPositionLegal(position))
-            throw new IllegalArgumentException("Illegal position");
+        super.move(position);
         boolean hasMove = false;
         for (int i = -2; i <= 2; i = i + 4)
             for (int j = -1; j <= 1; j = j + 2) {
@@ -28,6 +25,6 @@ public class Knight extends ChessPiece {
             }
         if (!hasMove)
             throw new IllegalChessMoveException("Illegal move for Knight");
-        pozicija = position;
+        super.setPosition(position);
     }
 }
