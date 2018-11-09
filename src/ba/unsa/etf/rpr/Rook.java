@@ -1,8 +1,7 @@
 package ba.unsa.etf.rpr;
 
+
 public class Rook extends ChessPiece {
-    private String pozicija;
-    private Color boja;
 
     Rook(String pozicija, Color boja) {
         super(pozicija, boja);
@@ -10,8 +9,9 @@ public class Rook extends ChessPiece {
 
     @Override
     public void move(String position) throws IllegalChessMoveException {
-        String stara = pozicija.toLowerCase();
+        String stara = super.getPosition().toLowerCase();
         String nova = position.toLowerCase();
+        super.move(position);
         if (!isPositionLegal(position))
             throw new IllegalArgumentException("Illegal position");
         boolean hasMove = false;
@@ -25,6 +25,7 @@ public class Rook extends ChessPiece {
             }
         if (!hasMove)
             throw new IllegalChessMoveException("Illegal move for Rook");
-        pozicija = position;
+        super.setPosition( position);
     }
+
 }

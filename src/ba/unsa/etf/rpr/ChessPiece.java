@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr;
 
+import java.util.ArrayList;
+
 public abstract class ChessPiece {
     private String pozicija;
     private Color boja;
@@ -10,11 +12,18 @@ public abstract class ChessPiece {
         return pozicija;
     }
 
+    public void setPosition(String position) {
+        pozicija=position;
+    }
+
     public Color getColor() {
         return boja;
     }
 
-    public abstract void move(String position) throws IllegalChessMoveException;
+    public void move(String position) throws IllegalChessMoveException{
+        if (!isPositionLegal(position))
+            throw new IllegalArgumentException("Illegal position");
+    }
 
     public boolean isPositionLegal(String position) {
         if (position.length() != 2 || !((position.charAt(0) >= 'A' && position.charAt(0) <= 'H') || (position.charAt(0) >= 'a' && position.charAt(0) <= 'h')) || !(position.charAt(1) >= '1' && position.charAt(1) <= '8'))
@@ -27,4 +36,5 @@ public abstract class ChessPiece {
         this.pozicija = pozicija;
         this.boja = boja;
     }
+
 }
