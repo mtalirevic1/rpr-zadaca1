@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr;
 
 
+import javafx.scene.control.cell.PropertyValueFactory;
+
 public class Board {
     private ChessPiece[][] sahovnica;
 
@@ -40,5 +42,53 @@ public class Board {
         sahovnica[7][5] = new Bishop("f8", ChessPiece.Color.BLACK);
         sahovnica[7][6] = new Knight("g8", ChessPiece.Color.BLACK);
         sahovnica[7][7] = new Rook("h8", ChessPiece.Color.BLACK);
+    }
+
+    void move(Class type, ChessPiece.Color color, String position) throws IllegalChessMoveException {
+        ChessPiece figura = null;
+
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++) {
+                if (sahovnica[i][j].getClass() == type && sahovnica[i][j].getColor() == color) {
+                    figura = sahovnica[i][j];
+                    break;
+
+
+                }
+            }
+
+        if (figura == null) throw new IllegalChessMoveException("Such a piece does not exist");
+
+        String lastPosition=figura.getPosition();
+        String posljednja=lastPosition.toUpperCase();
+        figura.move(position);
+        figura.setPosition(lastPosition);
+
+        String pozicija=position.toUpperCase();
+        int nova0=pozicija.charAt(0)-17-'0'-1;
+        int nova1=pozicija.charAt(1)-'0'-1;
+        int stara0=posljednja.charAt(0)-17-'0'-1;
+        int stara1=posljednja.charAt(1)-'0'-1;
+
+        if(sahovnica[nova1][nova0]!=null && sahovnica[nova1][nova0].getColor()==color)
+            throw new IllegalChessMoveException("Illegal move");
+
+        figura.move(position);
+        sahovnica[nova1][nova0]=figura;
+        figura=null;
+    }
+
+    void move(String oldPosition, String newPosition) throws IllegalChessMoveException{
+        String stara=oldPosition.toUpperCase();
+        int stara0=stara.charAt(0)-17-'0'-1;
+        int stara1=stara.charAt(1)-'0'-1;
+        if(sahovnica[stara0][stara1]==null)
+            throw new IllegalArgumentException("No piece on that field");
+        ChessPiece figura=sahovnica[stara0][stara1];
+        move(figura.getClass(),figura.getColor(),figura.getPosition());
+    }
+
+    boolean isCheck(ChessPiece.Color color){
+        return false;
     }
 }
