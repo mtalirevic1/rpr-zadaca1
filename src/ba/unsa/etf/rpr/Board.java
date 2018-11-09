@@ -1,8 +1,6 @@
 package ba.unsa.etf.rpr;
 
 
-import javafx.scene.control.cell.PropertyValueFactory;
-
 public class Board {
     private ChessPiece[][] sahovnica;
 
@@ -47,15 +45,27 @@ public class Board {
     void move(Class type, ChessPiece.Color color, String position) throws IllegalChessMoveException {
         ChessPiece figura = null;
 
-        for (int i = 0; i < 8; i++)
+        boolean stani=false;
+        String prosla;
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (sahovnica[i][j].getClass() == type && sahovnica[i][j].getColor() == color) {
+                    try{
+                        prosla=sahovnica[i][j].getPosition();
+                        sahovnica[i][j].move(position);
+                        sahovnica[i][j].setPosition(prosla);
+                    }
+                    catch (IllegalChessMoveException e){
+                        continue;
+                    }
                     figura = sahovnica[i][j];
+                    stani = true;
                     break;
-
-
                 }
+
             }
+            if (stani) break;
+        }
 
         if (figura == null) throw new IllegalChessMoveException("Such a piece does not exist");
 
