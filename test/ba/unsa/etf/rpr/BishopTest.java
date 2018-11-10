@@ -2,29 +2,29 @@ package ba.unsa.etf.rpr;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class QueenTest {
+class BishopTest {
 
     @org.junit.jupiter.api.Test
     void moveDiagonal() {
-        Queen q = new Queen("D1", ChessPiece.Color.WHITE);
+        Bishop b = new Bishop("D1", ChessPiece.Color.WHITE);
         assertDoesNotThrow(
-                () -> q.move("F3")
+                () -> b.move("F3")
         );
     }
 
     @org.junit.jupiter.api.Test
     void moveDijagonal2() {
-        Queen q = new Queen("C2", ChessPiece.Color.BLACK);
+        Bishop b = new Bishop("C2", ChessPiece.Color.BLACK);
         assertDoesNotThrow(
-                () -> q.move("B3")
+                () -> b.move("B3")
         );
     }
 
     @org.junit.jupiter.api.Test
     void moveBack() {
-        Queen q = new Queen("E3", ChessPiece.Color.WHITE);
-        assertDoesNotThrow(
-                () -> q.move("E2")
+        Bishop b = new Bishop("E3", ChessPiece.Color.WHITE);
+        assertThrows(IllegalChessMoveException.class,
+                () -> b.move("E2")
         );
     }
 
@@ -32,7 +32,7 @@ class QueenTest {
     void constructor1() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Queen("I2", ChessPiece.Color.WHITE)
+                () -> new Bishop("I2", ChessPiece.Color.WHITE)
         );
     }
 
@@ -40,7 +40,7 @@ class QueenTest {
     void constructor2() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Queen("B9", ChessPiece.Color.WHITE)
+                () -> new Bishop("B9", ChessPiece.Color.WHITE)
         );
     }
 
@@ -48,34 +48,35 @@ class QueenTest {
     void constructor3() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Queen("", ChessPiece.Color.WHITE)
+                () -> new Bishop("", ChessPiece.Color.WHITE)
         );
     }
 
     @org.junit.jupiter.api.Test
     void moveIllegal1() {
-        Queen q = new Queen("C1", ChessPiece.Color.BLACK);
+        Bishop b = new Bishop("C1", ChessPiece.Color.BLACK);
         assertThrows(
                 IllegalArgumentException.class,
-                () -> q.move("C0")
+                () -> b.move("C0")
         );
     }
 
     @org.junit.jupiter.api.Test
     void moveIllegal2() {
-        Queen q = new Queen("H1", ChessPiece.Color.BLACK);
+        Bishop b = new Bishop("H1", ChessPiece.Color.BLACK);
         assertThrows(
                 IllegalArgumentException.class,
-                () -> q.move("J1")
+                () -> b.move("J1")
         );
     }
 
     @org.junit.jupiter.api.Test
     void moveIllegal3() {
-        Queen q = new Queen("C1", ChessPiece.Color.BLACK);
+        Bishop b = new Bishop("C1", ChessPiece.Color.BLACK);
         assertThrows(
                 IllegalArgumentException.class,
-                () -> q.move("")
+                () -> b.move("")
         );
     }
+
 }
