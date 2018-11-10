@@ -120,10 +120,10 @@ public class Board {
         String stara=oldPosition.toUpperCase();
         int stara0=stara.charAt(0)-17-'0';
         int stara1=stara.charAt(1)-'0'-1;
-        if(sahovnica[stara0][stara1]==null)
+        if(sahovnica[stara1][stara0]==null)
             throw new IllegalArgumentException("No piece on that field");
         ChessPiece figura=sahovnica[stara1][stara0];
-        move(figura.getClass(),figura.getColor(),figura.getPosition());
+        move(figura.getClass(),figura.getColor(),newPosition);
     }
 
     boolean isCheck(ChessPiece.Color color){
