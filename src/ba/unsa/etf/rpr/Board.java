@@ -4,8 +4,12 @@ package ba.unsa.etf.rpr;
 public class Board {
     private ChessPiece[][] sahovnica;
 
+    public ChessPiece[][] getSahovnica(){
+        return sahovnica;
+    }
+
     Board() {
-        sahovnica = new ChessPiece[8][8];
+        sahovnica = new ChessPiece[8][8]; //Inicijaliziranje sahovnice
 
         sahovnica[0][0] = new Rook("a1", ChessPiece.Color.WHITE);
         sahovnica[0][1] = new Knight("b1", ChessPiece.Color.WHITE);
@@ -52,7 +56,7 @@ public class Board {
                 if (sahovnica[i][j] != null && sahovnica[i][j].getClass() == type && sahovnica[i][j].getColor() == color) {
                     try {
                         prosla = sahovnica[i][j].getPosition();
-                        sahovnica[i][j].move(position);
+                        sahovnica[i][j].move(position); //Da li je figura validna za dati potez
                         sahovnica[i][j].setPosition(prosla);
                     } catch (IllegalChessMoveException e) {
                         continue;
@@ -76,7 +80,7 @@ public class Board {
         String stara = oldPosition.toUpperCase();
         int stara0 = stara.charAt(0) - 17 - '0';
         int stara1 = stara.charAt(1) - '0' - 1;
-        if (sahovnica[stara1][stara0] == null)
+        if (sahovnica[stara1][stara0] == null) //Ako je pocetna pozicija prazna nema se sta pomjeriti
             throw new IllegalArgumentException("No piece on that field");
         ChessPiece figura = sahovnica[stara1][stara0];
 
@@ -91,38 +95,6 @@ public class Board {
         int novaX = pozicija.charAt(1) - '0' - 1;
         int staraY = posljednja.charAt(0) - 17 - '0';
         int staraX = posljednja.charAt(1) - '0' - 1;
-
-        /*if (sahovnica[novaX][novaY] != null && sahovnica[novaX][novaY].getColor() == figura.getColor())
-            throw new IllegalChessMoveException("Illegal move");
-
-        if (!(figura instanceof Knight)) {
-
-            int dirX = 0, dirY = 0;
-
-            if (figura instanceof Pawn && staraY != novaY && sahovnica[novaX][novaY] == null) {
-                throw new IllegalChessMoveException("Illegal move");
-            }
-
-            if (novaX > staraX) dirX = 1;
-            else if (novaX == staraX) dirX = 0;
-            else dirX = -1;
-
-            if (novaY > staraY) dirY = 1;
-            else if (novaY == staraY) dirY = 0;
-            else dirY = -1;
-
-            int duzina = 0;
-            int deltaX = Math.abs(staraX - novaX);
-            int deltaY = Math.abs(staraY - novaY);
-            if (deltaX > deltaY) duzina = deltaX;
-            else duzina = deltaY;
-
-            for (int i = 1; i < duzina; i++) {
-                if (sahovnica[staraX + i * dirX][staraY + i * dirY] != null) {
-                    throw new IllegalChessMoveException("Illegal move");
-                }
-            }
-        }*/
 
         if (!isMoveLegal(newPosition, figura)) throw new IllegalChessMoveException("Illegal move");
 
@@ -148,7 +120,7 @@ public class Board {
         figura.setPosition(lastPosition);
 
         String pozicija = newPosition.toUpperCase();
-        int novaY = pozicija.charAt(0) - 17 - '0';
+        int novaY = pozicija.charAt(0) - 17 - '0'; //Koordinate pozicija
         int novaX = pozicija.charAt(1) - '0' - 1;
         int staraY = posljednja.charAt(0) - 17 - '0';
         int staraX = posljednja.charAt(1) - '0' - 1;
@@ -156,24 +128,24 @@ public class Board {
         if (sahovnica[novaX][novaY] != null && sahovnica[novaX][novaY].getColor() == figura.getColor())
             return false;
 
-        if (!(figura instanceof Knight)) {
+        if (!(figura instanceof Knight)) { //Konj moze preskakati figure
 
             int dirX = 0, dirY = 0;
 
-            if (figura instanceof Pawn && staraY != novaY && sahovnica[novaX][novaY] == null) {
+            if (figura instanceof Pawn && staraY != novaY && sahovnica[novaX][novaY] == null) { //Ako je pijun samo moze dijagonalno ako jede
                 return false;
             }
 
             if (novaX > staraX) dirX = 1;
             else if (novaX == staraX) dirX = 0;
-            else dirX = -1;
+            else dirX = -1; //Smjer kretanja figure
 
             if (novaY > staraY) dirY = 1;
             else if (novaY == staraY) dirY = 0;
             else dirY = -1;
 
             int duzina = 0;
-            int deltaX = Math.abs(staraX - novaX);
+            int deltaX = Math.abs(staraX - novaX); //Duzina putanje figure do nove pozicije
             int deltaY = Math.abs(staraY - novaY);
             if (deltaX > deltaY) duzina = deltaX;
             else duzina = deltaY;

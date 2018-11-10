@@ -1,7 +1,5 @@
 package ba.unsa.etf.rpr;
 
-import java.util.ArrayList;
-
 public abstract class ChessPiece {
     private String pozicija;
     private Color boja;
