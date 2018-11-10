@@ -265,5 +265,14 @@ class BoardTest {
                     b.move("E2", "D3");
                 }
         );
+
+    }
+
+    @Test
+    void isMoveLegal() {
+        Board b = new Board();
+        assertAll(
+                ()->assertTrue(b.isMoveLegal("a4",b.getSahovnica()[1][0]))
+        );
     }
 }
