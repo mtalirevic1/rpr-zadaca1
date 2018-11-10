@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest {
 
     @Test
-    // Is the board usable after isCheck
+        // Is the board usable after isCheck
     void someLegalMoves() {
         Board b = new Board();
         boolean no = b.isCheck(ChessPiece.Color.WHITE);
@@ -23,22 +23,22 @@ class BoardTest {
     }
 
     @Test
-    // Pawn eats diagonally
+        // Pawn eats diagonally
     void pawnDiagonal() {
         Board b = new Board();
         assertDoesNotThrow(
-            () -> {
-                b.move(Pawn.class, ChessPiece.Color.WHITE, "E4");
-                b.move(Pawn.class, ChessPiece.Color.WHITE, "E5");
-                b.move(Pawn.class, ChessPiece.Color.WHITE, "E6");
-                b.move(Pawn.class, ChessPiece.Color.WHITE, "D7");
-                b.move(Pawn.class, ChessPiece.Color.WHITE, "C8");
-            }
+                () -> {
+                    b.move(Pawn.class, ChessPiece.Color.WHITE, "E4");
+                    b.move(Pawn.class, ChessPiece.Color.WHITE, "E5");
+                    b.move(Pawn.class, ChessPiece.Color.WHITE, "E6");
+                    b.move(Pawn.class, ChessPiece.Color.WHITE, "D7");
+                    b.move(Pawn.class, ChessPiece.Color.WHITE, "C8");
+                }
         );
     }
 
     @Test
-    // Check by pawn
+        // Check by pawn
     void isCheck() {
         Board b = new Board();
         try {
@@ -46,14 +46,14 @@ class BoardTest {
             b.move(Pawn.class, ChessPiece.Color.WHITE, "E5");
             b.move(Pawn.class, ChessPiece.Color.WHITE, "E6");
             b.move(Pawn.class, ChessPiece.Color.WHITE, "D7");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         assertTrue(b.isCheck(ChessPiece.Color.BLACK));
     }
 
     @Test
-    // Will queen be moved by isCheck
+        // Will queen be moved by isCheck
     void isCheckUsable() {
         Board b = new Board();
         try {
@@ -67,19 +67,19 @@ class BoardTest {
             b.move(Pawn.class, ChessPiece.Color.WHITE, "F6");
             b.move(Pawn.class, ChessPiece.Color.WHITE, "E7");
             b.move(Pawn.class, ChessPiece.Color.WHITE, "F8");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         b.isCheck(ChessPiece.Color.BLACK);
         assertDoesNotThrow(
-            () -> {
-                b.move(Queen.class, ChessPiece.Color.WHITE, "D3");
-            }
+                () -> {
+                    b.move(Queen.class, ChessPiece.Color.WHITE, "D3");
+                }
         );
     }
 
     @Test
-    // No check
+        // No check
     void isCheck2() {
         Board b = new Board();
         try {
@@ -89,14 +89,14 @@ class BoardTest {
             b.move(Pawn.class, ChessPiece.Color.WHITE, "D7");
             b.move(Pawn.class, ChessPiece.Color.WHITE, "C8");
             b.move(Queen.class, ChessPiece.Color.WHITE, "E2");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         assertFalse(b.isCheck(ChessPiece.Color.BLACK));
     }
 
     @Test
-    // Check by queen
+        // Check by queen
     void isCheck3() {
         Board b = new Board();
         try {
@@ -111,14 +111,14 @@ class BoardTest {
             b.move(Pawn.class, ChessPiece.Color.WHITE, "F6");
             b.move(Pawn.class, ChessPiece.Color.WHITE, "E7");
             b.move(Pawn.class, ChessPiece.Color.WHITE, "F8");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         assertTrue(b.isCheck(ChessPiece.Color.BLACK));
     }
 
     @Test
-    // Queen, bishop and rook can't jump pieces
+        // Queen, bishop and rook can't jump pieces
     void jumpPiece() {
         Board b = new Board();
         assertAll(
@@ -141,7 +141,7 @@ class BoardTest {
     // Same test with other move method
 
     @Test
-    // Is the board usable after isCheck
+        // Is the board usable after isCheck
     void someLegalMoves1() {
         Board b = new Board();
         boolean no = b.isCheck(ChessPiece.Color.WHITE);
@@ -157,7 +157,7 @@ class BoardTest {
     }
 
     @Test
-    // Pawn eats diagonally, check by queen
+        // Pawn eats diagonally, check by queen
     void pawnDiagonal1() {
         Board b = new Board();
         assertDoesNotThrow(
@@ -172,7 +172,31 @@ class BoardTest {
     }
 
     @Test
-    // Check by pawn
+        // Pawn cannot move diagonally without eating a piece
+    void pawnDiagonal2() {
+        Board b = new Board();
+        assertThrows(IllegalChessMoveException.class,
+                () -> b.move("E2", "D3"));
+    }
+
+    @Test
+        // Pawn cannot move diagonally without eating a piece
+    void emptyField() {
+        Board b = new Board();
+        assertThrows(IllegalArgumentException.class,
+                () -> b.move("D4", "D3"));
+    }
+
+    @Test
+        //Rook blocked by pawn
+    void sameColorMove() {
+        Board b = new Board();
+        assertThrows(IllegalChessMoveException.class,
+                () -> b.move("A1", "A2"));
+    }
+
+    @Test
+        // Check by pawn
     void isCheck1() {
         Board b = new Board();
         try {
@@ -180,14 +204,14 @@ class BoardTest {
             b.move("E4", "E5");
             b.move("E5", "E6");
             b.move("E6", "D7");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         assertTrue(b.isCheck(ChessPiece.Color.BLACK));
     }
 
     @Test
-    // No check
+        // No check
     void isCheck12() {
         Board b = new Board();
         try {
@@ -197,14 +221,14 @@ class BoardTest {
             b.move("E6", "D7");
             b.move("D7", "C8");
             b.move("D1", "E2");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         assertFalse(b.isCheck(ChessPiece.Color.BLACK));
     }
 
     @Test
-    // Check by queen
+        // Check by queen
     void isCheck13() {
         Board b = new Board();
         try {
@@ -219,14 +243,14 @@ class BoardTest {
             b.move("F5", "F6");
             b.move("F6", "E7");
             b.move("E7", "F8");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         assertTrue(b.isCheck(ChessPiece.Color.BLACK));
     }
 
     @Test
-    // Queen, bishop and rook can't jump pieces
+        // Queen, bishop and rook can't jump pieces
     void jumpPiece1() {
         Board b = new Board();
         assertAll(
@@ -246,7 +270,7 @@ class BoardTest {
     }
 
     @Test
-    // Check by queen
+        // Check by queen
     void isCheckUsable1() {
         Board b = new Board();
         try {
@@ -256,7 +280,7 @@ class BoardTest {
             b.move("E6", "D7");
             b.move("D7", "C8");
             b.move("D1", "E2");
-        } catch(Exception e) {
+        } catch (Exception e) {
             // Do nothing
         }
         b.isCheck(ChessPiece.Color.BLACK);
@@ -272,7 +296,7 @@ class BoardTest {
     void isMoveLegal() {
         Board b = new Board();
         assertAll(
-                ()->assertTrue(b.isMoveLegal("a4",b.getSahovnica()[1][0]))
+                () -> assertTrue(b.isMoveLegal("a4", b.getSahovnica()[1][0]))
         );
     }
 }

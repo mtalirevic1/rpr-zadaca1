@@ -15,6 +15,15 @@ class KnightTest {
 
     }
 
+    @Test
+    void move2() {
+        Knight k = new Knight("C5", ChessPiece.Color.WHITE);
+        assertDoesNotThrow(
+                () -> k.move("E4")
+        );
+
+    }
+
     @org.junit.jupiter.api.Test
     void constructor1() {
         assertThrows(

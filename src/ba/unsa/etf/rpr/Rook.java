@@ -12,8 +12,6 @@ public class Rook extends ChessPiece {
         String stara = super.getPosition().toLowerCase();
         String nova = position.toLowerCase();
         super.move(position);
-        if (!isPositionLegal(position))
-            throw new IllegalArgumentException("Illegal position");
         boolean hasMove = false;
         for (int i = -8; i <= 8; i++)
             for (int j = -8; j <= 8; j++) {

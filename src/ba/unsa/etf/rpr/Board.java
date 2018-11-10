@@ -125,7 +125,7 @@ public class Board {
         int staraY = posljednja.charAt(0) - 17 - '0';
         int staraX = posljednja.charAt(1) - '0' - 1;
 
-        if (sahovnica[novaX][novaY] != null && sahovnica[novaX][novaY].getColor() == figura.getColor())
+        if (sahovnica[novaX][novaY] != null && sahovnica[novaX][novaY].getColor() == figura.getColor()) //Figura iste boje
             return false;
 
         if (!(figura instanceof Knight)) { //Konj moze preskakati figure
