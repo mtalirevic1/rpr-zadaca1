@@ -151,6 +151,8 @@ public class Board {
             else duzina = deltaY;
 
             for (int i = 1; i < duzina; i++) {
+                if(staraY + i * dirY >= 8) return false;
+                if((staraX + i * dirX)>=8) return false;
                 if ((staraY + i * dirY) < 8 && (staraX + i * dirX) < 8 && sahovnica[staraX + i * dirX][staraY + i * dirY] != null) {
                     return false;
                 }

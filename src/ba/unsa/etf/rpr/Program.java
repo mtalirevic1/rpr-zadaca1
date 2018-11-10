@@ -11,11 +11,10 @@ public class Program {
             try {
 
                 if(brojac%2==0 && b.isCheck(ChessPiece.Color.WHITE)){ //Da li je check za sljedecu boju
-                    System.out.print("\nCHECK!!!");
+                    System.out.print("CHECK!!!");
                 }
-
-                if(brojac%2!=0 && b.isCheck(ChessPiece.Color.BLACK)){
-                    System.out.print("\nCHECK!!!");
+                else if(brojac%2!=0 && b.isCheck(ChessPiece.Color.BLACK)){
+                    System.out.print("CHECK!!!");
                 }
 
                 if (brojac % 2 == 0) {
