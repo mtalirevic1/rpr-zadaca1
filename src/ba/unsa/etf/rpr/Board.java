@@ -45,17 +45,16 @@ public class Board {
     void move(Class type, ChessPiece.Color color, String position) throws IllegalChessMoveException {
         ChessPiece figura = null;
 
-        boolean stani=false;
+        boolean stani = false;
         String prosla;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (sahovnica[i][j]!=null && sahovnica[i][j].getClass() == type && sahovnica[i][j].getColor() == color) {
-                    try{
-                        prosla=sahovnica[i][j].getPosition();
+                if (sahovnica[i][j] != null && sahovnica[i][j].getClass() == type && sahovnica[i][j].getColor() == color) {
+                    try {
+                        prosla = sahovnica[i][j].getPosition();
                         sahovnica[i][j].move(position);
                         sahovnica[i][j].setPosition(prosla);
-                    }
-                    catch (IllegalChessMoveException e){
+                    } catch (IllegalChessMoveException e) {
                         continue;
                     }
                     figura = sahovnica[i][j];
@@ -69,64 +68,69 @@ public class Board {
 
         if (figura == null) throw new IllegalChessMoveException("Such a piece does not exist");
 
-        String lastPosition=figura.getPosition();
-        String posljednja=lastPosition.toUpperCase();
-        figura.move(position);
+        move(figura.getPosition(), position);
+    }
+
+    void move(String oldPosition, String newPosition) throws IllegalChessMoveException {
+
+        String stara = oldPosition.toUpperCase();
+        int stara0 = stara.charAt(0) - 17 - '0';
+        int stara1 = stara.charAt(1) - '0' - 1;
+        if (sahovnica[stara1][stara0] == null)
+            throw new IllegalArgumentException("No piece on that field");
+        ChessPiece figura = sahovnica[stara1][stara0];
+
+
+        String lastPosition = figura.getPosition();
+        String posljednja = lastPosition.toUpperCase();
+        figura.move(newPosition);
         figura.setPosition(lastPosition);
 
-        String pozicija=position.toUpperCase();
-        int novaY=pozicija.charAt(0)-17-'0';
-        int novaX=pozicija.charAt(1)-'0'-1;
-        int staraY=posljednja.charAt(0)-17-'0';
-        int staraX=posljednja.charAt(1)-'0'-1;
+        String pozicija = newPosition.toUpperCase();
+        int novaY = pozicija.charAt(0) - 17 - '0';
+        int novaX = pozicija.charAt(1) - '0' - 1;
+        int staraY = posljednja.charAt(0) - 17 - '0';
+        int staraX = posljednja.charAt(1) - '0' - 1;
 
-        if(sahovnica[novaX][novaY]!=null && sahovnica[novaX][novaY].getColor()==color)
+        if (sahovnica[novaX][novaY] != null && sahovnica[novaX][novaY].getColor() == figura.getColor())
             throw new IllegalChessMoveException("Illegal move");
 
-        if(!(figura instanceof Knight)){
+        if (!(figura instanceof Knight)) {
 
-            int dirX=0, dirY=0;
+            int dirX = 0, dirY = 0;
 
-            if(figura instanceof Pawn && staraY!=novaY && sahovnica[novaX][novaY]==null){
+            if (figura instanceof Pawn && staraY != novaY && sahovnica[novaX][novaY] == null) {
                 throw new IllegalChessMoveException("Illegal move");
             }
 
-            if(novaX>staraX) dirX=1;
-            else if(novaX==staraX) dirX=0;
-            else dirX=-1;
+            if (novaX > staraX) dirX = 1;
+            else if (novaX == staraX) dirX = 0;
+            else dirX = -1;
 
-            if(novaY>staraY) dirY=1;
-            else if(novaY==staraY) dirY=0;
-            else dirY=-1;
+            if (novaY > staraY) dirY = 1;
+            else if (novaY == staraY) dirY = 0;
+            else dirY = -1;
 
-            int duzina=0;
-            int deltaX=Math.abs(staraX-novaX);
-            int deltaY=Math.abs(staraY-novaY);
-            if(deltaX>deltaY) duzina=deltaX;
-            else duzina=deltaY;
+            int duzina = 0;
+            int deltaX = Math.abs(staraX - novaX);
+            int deltaY = Math.abs(staraY - novaY);
+            if (deltaX > deltaY) duzina = deltaX;
+            else duzina = deltaY;
 
-            for(int i=1;i<duzina-1;i++){
-                if(sahovnica[staraX+i*dirX][staraY+i*dirY]!=null){ throw new IllegalChessMoveException("Illegal move");}
+            for (int i = 1; i < duzina - 1; i++) {
+                if (sahovnica[staraX + i * dirX][staraY + i * dirY] != null) {
+                    throw new IllegalChessMoveException("Illegal move");
+                }
             }
         }
 
-        figura.move(position);
-        sahovnica[novaX][novaY]=figura;
-       // figura=null;
-        sahovnica[staraX][staraY]=null;
+        figura.move(newPosition);
+        sahovnica[novaX][novaY] = figura;
+        // figura=null;
+        sahovnica[staraX][staraY] = null;
     }
 
-    void move(String oldPosition, String newPosition) throws IllegalChessMoveException{
-        String stara=oldPosition.toUpperCase();
-        int stara0=stara.charAt(0)-17-'0';
-        int stara1=stara.charAt(1)-'0'-1;
-        if(sahovnica[stara1][stara0]==null)
-            throw new IllegalArgumentException("No piece on that field");
-        ChessPiece figura=sahovnica[stara1][stara0];
-        move(figura.getClass(),figura.getColor(),newPosition);
-    }
-
-    boolean isCheck(ChessPiece.Color color){
+    boolean isCheck(ChessPiece.Color color) {
         return false;
     }
 }
