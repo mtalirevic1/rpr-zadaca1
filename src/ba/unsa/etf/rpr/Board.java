@@ -124,14 +124,13 @@ public class Board {
             }
         }*/
 
-        if(!isMoveLegal(newPosition,figura)) throw new IllegalChessMoveException("Illegal move");
+        if (!isMoveLegal(newPosition, figura)) throw new IllegalChessMoveException("Illegal move");
 
-        if(!(sahovnica[novaX][novaY] instanceof King)) {
+        if (!(sahovnica[novaX][novaY] instanceof King)) {
             figura.move(newPosition);
             sahovnica[novaX][novaY] = figura;
             sahovnica[staraX][staraY] = null;
-        }
-        else{
+        } else {
 
         }
     }
@@ -143,8 +142,7 @@ public class Board {
         String posljednja = lastPosition.toUpperCase();
         try {
             figura.move(newPosition);
-        }
-        catch (IllegalChessMoveException e){
+        } catch (IllegalChessMoveException e) {
             return false;
         }
         figura.setPosition(lastPosition);
@@ -181,7 +179,7 @@ public class Board {
             else duzina = deltaY;
 
             for (int i = 1; i < duzina; i++) {
-                if (sahovnica[staraX + i * dirX][staraY + i * dirY] != null) {
+                if ((staraY + i * dirY) < 8 && (staraX + i * dirX) < 8 && sahovnica[staraX + i * dirX][staraY + i * dirY] != null) {
                     return false;
                 }
             }
@@ -191,9 +189,9 @@ public class Board {
 
 
     boolean isCheck(ChessPiece.Color color) {
-        ChessPiece kralj=null;
+        ChessPiece kralj = null;
 
-        boolean stani=false;
+        boolean stani = false;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (sahovnica[i][j] != null && (sahovnica[i][j] instanceof King) && sahovnica[i][j].getColor() == color) {
@@ -206,11 +204,11 @@ public class Board {
             if (stani) break;
         }
 
-        String kingPosition=kralj.getPosition();
+        String kingPosition = kralj.getPosition();
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (sahovnica[i][j] != null && sahovnica[i][j].getColor() != color && isMoveLegal(kingPosition,sahovnica[i][j])){
+                if (sahovnica[i][j] != null && sahovnica[i][j].getColor() != color && isMoveLegal(kingPosition, sahovnica[i][j])) {
                     return true;
                 }
 
